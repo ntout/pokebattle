@@ -32,7 +32,9 @@ from django.utils import timezone
 #         return self.name
 
 
+
 class Battle(models.Model):
+    # TODO: foreignkey for user that ran the battle
     pokemon_1 = models.CharField(max_length=50)
     pokemon_2 = models.CharField(max_length=50)
     move_log = ArrayField(

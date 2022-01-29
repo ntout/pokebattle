@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from rest_framework.decorators import api_view
 import requests
 
 # Create your views here.
@@ -21,3 +22,8 @@ def users(request):
 
 
     return HttpResponse("Users")
+
+
+# @api_view(['GET'])
+# def getBattles(request):
+#     if
