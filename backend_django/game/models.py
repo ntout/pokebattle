@@ -10,7 +10,7 @@ class Battle(models.Model):
     move_log = ArrayField(
         models.CharField(max_length=250)
     )
-    winner = models.CharField(max_length=50)
+    winner = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         name = "{} vs {}".format(self.pokemon_1, self.pokemon_2)

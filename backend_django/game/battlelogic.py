@@ -55,7 +55,7 @@ class Pokemon:
         return move.name, 0
        
 
-
+# TODO: add a winner
 class BattleSimulation:
     def __init__(self, poke1, poke2):
         self.poke1: Pokemon = poke1
@@ -63,6 +63,7 @@ class BattleSimulation:
         self.move_log = []
         self.attacker: Pokemon = poke1
         self.defender: Pokemon = poke2
+        self.winner = ''
 
 
     def log_move(self, log_str):
@@ -86,7 +87,7 @@ class BattleSimulation:
         self.log_move(log)
 
         if self.defender.fainted:
-            self.log_move(self.attacker.name + " is the winner!")
+            self.winner = self.attacker.name
             return False
 
         self.switch_turn()
