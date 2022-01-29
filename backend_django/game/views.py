@@ -24,6 +24,10 @@ def users(request):
     return HttpResponse("Users")
 
 
-# @api_view(['GET'])
-# def getBattles(request):
-#     if
+@api_view(['GET'])
+def getBattles(request):
+    pass
+
+@api_view(['POST'])
+def addBattle(request):
+    pass
