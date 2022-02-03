@@ -8,7 +8,7 @@ class Battle(models.Model):
     pokemon_1 = models.CharField(max_length=50)
     pokemon_2 = models.CharField(max_length=50)
     move_log = ArrayField(
-        models.CharField(max_length=250)
+        models.CharField(max_length=350)
     )
     winner = models.CharField(max_length=50, blank=True)
 

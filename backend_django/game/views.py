@@ -50,6 +50,26 @@ class BattleDetail(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+    def post(self, request):
+        data = request.data
+
+        p1: Pokemon = Pokemon(data['pokemon_1'])
+        p2: Pokemon = Pokemon(data['pokemon_2'])
+
+        for move in data['moves_1']:
+            p1.add_move(Move(move['name'], move['pp'], move['accuracy'], move['power']))
+    
+        for move in data['moves_2']:
+            p2.add_move(Move(move['name'], move['pp'], move['accuracy'], move['power']))
+
+        battle: BattleSimulation = BattleSimulation(p1, p2)
+        battle.simulate()
+   
+        btl: Battle = Battle.objects.create(pokemon_1=battle.poke1.name, pokemon_2=battle.poke2, move_log=battle.move_log, winner=battle.winner)
+        serializer = BattleSerializer(btl)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 class BattleList(APIView):
     permission_classes = (IsAuthenticated,)
     
