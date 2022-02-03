@@ -1,5 +1,6 @@
 
 import random
+import json
 from typing import List
 
 
@@ -19,6 +20,16 @@ class Move:
             return True
         else:
             return False
+
+    def get_data(self):
+        d = {
+            'name': self.name,
+            'pp': self.pp,
+            'accuracy': self.accuracy,
+            'power': self.power
+        }
+        return(d)
+
 
 
 class Pokemon:
