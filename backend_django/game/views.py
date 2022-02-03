@@ -1,9 +1,14 @@
 from shutil import move
-from urllib import response
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from rest_framework.decorators import api_view
 import requests
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
+from .serializers import BattleSerializer
+
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Battle
 
@@ -19,9 +24,9 @@ def users(request):
     pokedex = response.json()
     print(len(pokedex['pokemon_entries']))
 
-    poke_id = pokedex['pokemon_entries'][69]
+    poke_id = pokedex['pokemon_entries'][3]
 
-    poke_url = 'https://pokeapi.co/api/v2/pokemon/69'
+    poke_url = 'https://pokeapi.co/api/v2/pokemon/3'
     poke_response = requests.get(poke_url)
     pokemon = poke_response.json()
     print(pokemon['name'])
@@ -30,15 +35,38 @@ def users(request):
     return HttpResponse("Users")
 
 
-@api_view(['GET'])
-def getBattles(request):
-    pass
+class BattleDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return Battle.objects.get(pk=pk)
+        except Battle.DoesNotExist:
+            raise Http404
+
+    def get(self, request, battle_id: int):
+        battle = self.get_object(battle_id)
+        serializer = BattleSerializer(battle)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class BattleList(APIView):
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        battles = Battle.objects.all()
+        serializer = BattleSerializer(battles, many=True)
+        return Response(serializer.data)
+
+
 
 @api_view(['POST'])
 def addBattle(request):
     pass
 
-
+# Creates a battle, 
+# simulates the turns, 
+# saves it to database
 def simulate_battle(request):
     p1: Pokemon = Pokemon('Charmander')
     p2: Pokemon = Pokemon('Squirtle')
@@ -69,3 +97,4 @@ def simulate_battle(request):
     btl.save()
 
     return HttpResponse("battle")
+

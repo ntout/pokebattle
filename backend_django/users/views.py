@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 
+from rest_framework.permissions import IsAuthenticated
+
 class ObtainTokenPair(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -26,5 +28,7 @@ class UserCreate(APIView):
 
 
 class HelloWorldView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request):
-        return Response(data={"hello":"world"}, status=status.HTTP_200_OK)
+        return Response(data={'hello':'world'}, status=status.HTTP_200_OK)

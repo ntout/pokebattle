@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 import propTypes from 'prop-types';
 import './Login.css';
-import Register from "./Register";
 import { useNavigate } from "react-router-dom";
 
-async function loginUser(credentials) {
-    return fetch('http://127.0.0.1:8000/user/token/obtain/', {
+async function registerUser(credentials) {
+    return fetch('http://127.0.0.1:8000/user/create/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,24 +14,22 @@ async function loginUser(credentials) {
           .then(data => data.json())
 }
 
-export default function Login({setToken}) {
+export default function Register({setToken}) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const token = await loginUser({
+        const token = await registerUser({
             username,
             password
         });
         setToken(token);
     }
 
-    
-
     return(
-        <div className="login-wrapper">
-            <h1> Please Log In </h1>
+        <div className="register-wrapper">
+            <h1> Create Account </h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Username</p>
@@ -43,13 +40,13 @@ export default function Login({setToken}) {
                     <input type="password" onChange={e => setPassword(e.target.value)}/>
                 </label>
                 <div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Save</button>
                 </div>
             </form>
         </div>
     )
 }
 
-Login.propTypes = {
+Register.propTypes = {
     setToken: propTypes.func.isRequired
 }
