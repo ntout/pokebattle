@@ -68,7 +68,7 @@ class PokemonList(APIView):
         print(pokedex)
         pokeapi = PokeApi()
         pokemon = pokeapi.get_pokemon_list_by_pokedex(pokedex)
-        return Response(pokemon, status=status.HTTP_200_OK)
+        return Response(data=pokemon, status=status.HTTP_200_OK)
 
 
 class MoveList(APIView):

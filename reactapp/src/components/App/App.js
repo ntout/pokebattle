@@ -1,13 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 
-import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
-import Register from '../Login/Register';
+import Pokemon from '../Pokemon/Pokemon';
 
 import useToken from './useToken';
-
 
 
 function App() {
@@ -19,21 +16,16 @@ function App() {
   }
 
   function logout() {
+    console.log(token["access"])
     sessionStorage.clear();
     window.location.reload(false);
   }
 
   return (
     <div className="wrapper">
-      <h1>Application</h1>
+      <h1>Pokemon Battle Simulator</h1>
       <button onClick={logout}>logout</button>
-      <Router>
-        <Routes>
-          <Route exact path="/dashboard" element={<Dashboard />}/>
-          <Route exact path="/register" element={<Register />}/>
-          <Route exact path="/login" component={<Login/>}/>
-        </Routes>
-      </Router>
+      <Pokemon />
     </div>
   );
 }

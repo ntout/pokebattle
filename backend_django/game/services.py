@@ -15,7 +15,7 @@ class PokeApi:
 
         pokemon = []
         for p in data['pokemon_entries']:
-            pokemon.append((p['entry_number'], p['pokemon_species']['name']))
+            pokemon.append({'id':p['entry_number'], 'name':p['pokemon_species']['name']})
 
         return pokemon
 
